@@ -1,6 +1,7 @@
 package RestTest;
 
 
+import Utility.JsonParse;
 import Utility.payload;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -33,7 +34,7 @@ public class TestBDD {
                 statusCode(200)
                 .body("scope", equalTo("APP"))
                 .header("server", "Apache/2.4.18 (Ubuntu)").extract().response().asString();
-        JsonPath jsonPath=new JsonPath(response);
+        JsonPath jsonPath=JsonParse.JsonParsing(response);
         String placeId=jsonPath.getString("place_id");
 
         String newAddress="70 Summer walk, USA";
@@ -53,7 +54,7 @@ public class TestBDD {
                 .when().get("/maps/api/place/get/json").then()
                 .assertThat().
                 statusCode(200).extract().response().asString();
-            JsonPath jsPath=new JsonPath(getResponse);
+        JsonPath jsPath=JsonParse.JsonParsing(getResponse);
             String Address=jsPath.getString("address");
         Assert.assertEquals(Address,newAddress);
 
