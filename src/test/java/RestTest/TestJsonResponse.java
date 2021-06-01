@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 public class TestJsonResponse {
     @Test
     public void TestNestedJsonResponse() {
+
         int numberOfCopiesSoldAmount=0;
         String response = payload.mockResponse();
         JsonPath jsonPath = JsonParse.JsonParsing(response);
@@ -26,6 +27,6 @@ public class TestJsonResponse {
         System.out.println(numberOfCopiesSoldAmount);
         int purchasedAmount=jsonPath.getInt("dashboard.purchaseAmount");
         Assert.assertEquals(purchasedAmount,numberOfCopiesSoldAmount);
-
     }
 }
+
