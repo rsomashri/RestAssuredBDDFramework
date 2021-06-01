@@ -23,4 +23,15 @@ public class payload {
 
         return payload;
     }
+    public static String  loadPayload(String placeID,String newAddress){
+
+        String payload="{\n" +
+                "\"place_id\":\""+placeID+"\",\n" +
+                "\"address\":\""+newAddress+"\",\n" +
+                "\"key\":\"qaclick123\"\n" +
+                "}";
+
+        return payload;
+    }
+
 }
