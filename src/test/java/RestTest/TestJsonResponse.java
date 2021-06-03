@@ -3,7 +3,7 @@ package RestTest;
 
 
 import Utility.JsonParse;
-import Utility.payload;
+import Utility.Payload;
 import io.restassured.path.json.JsonPath;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class TestJsonResponse {
     public void TestNestedJsonResponse() {
 
         int numberOfCopiesSoldAmount=0;
-        String response = payload.mockResponse();
+        String response = Payload.mockResponse();
         JsonPath jsonPath = JsonParse.JsonParsing(response);
         int count = jsonPath.getInt("courses.size()");
         for(int i=0;i<count;i++)

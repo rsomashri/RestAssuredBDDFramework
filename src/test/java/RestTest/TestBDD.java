@@ -2,7 +2,7 @@ package RestTest;
 
 
 import Utility.JsonParse;
-import Utility.payload;
+import Utility.Payload;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.testng.Assert;
@@ -26,7 +26,7 @@ public class TestBDD {
                 .all()
                 .queryParam("key", "qaclick123")
                 .header("Content-Type", "application/json")
-                .body(payload.loadPayload())
+                .body(Payload.loadPayload())
                 .when()
                 .post("maps/api/place/add/json")
                 .then()
@@ -41,7 +41,7 @@ public class TestBDD {
         //put call
         given().log().all().queryParam("key", "qaclick123")
                 .header("Content-Type", "application/json")
-                .body(payload.loadPayload(placeId,newAddress))
+                .body(Payload.loadPayload(placeId,newAddress))
                 .when().put("maps/api/place/update/json").then()
                 .assertThat().
                 statusCode(200);
@@ -50,7 +50,7 @@ public class TestBDD {
         //get call to validate the same placeID is updated for the location
         String getResponse=given().log().all().queryParam("key", "qaclick123").queryParam("place_id",placeId)
                 .header("Content-Type", "application/json")
-                .body(payload.loadPayload(placeId,newAddress))
+                .body(Payload.loadPayload(placeId,newAddress))
                 .when().get("/maps/api/place/get/json").then()
                 .assertThat().
                 statusCode(200).extract().response().asString();
