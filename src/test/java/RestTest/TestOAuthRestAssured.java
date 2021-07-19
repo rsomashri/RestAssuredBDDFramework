@@ -2,12 +2,14 @@ package RestTest;
 
 import static io.restassured.RestAssured.*;
 
+import Pojo.GetCourse;
+import Pojo.Api;
 import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
 
 import org.testng.annotations.Test;
 
-import java.util.Base64;
+import java.util.List;
 
 
 public class TestOAuthRestAssured {
@@ -16,7 +18,7 @@ public class TestOAuthRestAssured {
     public static String redirectUri = "https://rahulshettyacademy.com/getCourse.php";
     public static String grant_type = "authorization_code";
     public static String client_secret = "erZOWM9g3UtwNRj340YYaK_W";
-    public static String code = "4%2F0AY0e-g4OGblsqkG5CeQc9UC_OBYSIEkb48Aj3OEb7X77u5Xg8N1LAdjah8fsq1u7ZE6IDQ";
+    public static String code = "4%2F0AX4XfWh8zkqFrNvNWdzYIlM8VPv0ZXdEacOtGRwEkl0F6GWGajeF4uwCvZfJ_16RXszeRQ";
 
     @Test
     public static void getAccessToken() {
@@ -36,12 +38,21 @@ public class TestOAuthRestAssured {
     }
 
     public static void getActualRequestResponse(String accessToken) {
-        String actualResponse = given().contentType("application/json").
+        GetCourse actualResponse = given().contentType("application/json").
                 queryParams("access_token", accessToken).expect().defaultParser(Parser.JSON)
                 .when()
-                .get("https://rahulshettyacademy.com/getCourse.php")
-                .asString();
-        System.out.println(actualResponse);
+                .get("https://rahulshettyacademy.com/getCourse.php").as(GetCourse.class);
+        System.out.println(actualResponse.getExpertise());
+        System.out.println(actualResponse.getCourses().getApi().get(1).getCourseTitle());
+        System.out.println(actualResponse.getLinkedIn());
+        List<Api> apiCourses=actualResponse.getCourses().getApi();
+        for(int i=0; i < apiCourses.size(); i++){
+        if(apiCourses.get(i).getCourseTitle().equalsIgnoreCase("SoapUI webservices Testing"))
+            {
+                System.out.println(apiCourses.get(i).getPrice());
+            }
+            System.out.println(apiCourses.get(i).getCourseTitle());
+        }
 
     }
 
